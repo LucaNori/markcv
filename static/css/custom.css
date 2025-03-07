@@ -1,5 +1,5 @@
 .CodeMirror {
-    height: calc(100vh - 200px) !important;
+    height: calc(100vh - 250px) !important;
     min-height: 400px;
 }
 
@@ -12,7 +12,7 @@
 }
 
 #preview {
-    height: calc(100vh - 200px);
+    height: calc(100vh - 250px);
     min-height: 400px;
     overflow-y: auto;
     padding: 1rem;
@@ -72,6 +72,93 @@
     font-weight: 500;
 }
 
+/* Image Styles */
+.cv-image {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+}
+
+.cv-image.float-left {
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 10px;
+}
+
+.cv-image.float-right {
+    float: right;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.cv-image.mx-auto {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Clear floats after images */
+h2, h3 {
+    clear: both;
+}
+
+/* Fix for fullscreen and preview modes */
+.EasyMDEContainer .CodeMirror-fullscreen {
+    height: 100% !important;
+    max-height: none !important;
+    min-height: 100% !important;
+}
+
+.EasyMDEContainer .editor-preview-full {
+    height: 100% !important;
+    max-height: none !important;
+    min-height: 100% !important;
+}
+
+.EasyMDEContainer .editor-preview-side {
+    height: 100% !important;
+    max-height: none !important;
+    min-height: 100% !important;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .CodeMirror {
+        height: calc(100vh - 200px) !important;
+    }
+    
+    #preview {
+        height: calc(100vh - 200px);
+    }
+    
+    .editor-toolbar button {
+        padding: 0.25rem;
+    }
+}
+
+/* Drop Area Styles */
+#drop-area {
+    transition: all 0.3s ease;
+}
+
+#drop-area.highlight {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+}
+
+/* Image Format Toolbar */
+#image-format-toolbar {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.img-align-left.active,
+.img-align-center.active,
+.img-align-right.active {
+    background-color: #e5e7eb;
+}
+
+/* Print Styles */
 @media print {
     body {
         background: white;
@@ -82,13 +169,27 @@
         padding: 0;
     }
     
-    header, .editor-toolbar, .CodeMirror, #saveBtn, #downloadPdfBtn {
-        display: none;
+    header, .editor-toolbar, .CodeMirror, #saveBtn, #downloadPdfBtn, 
+    #template-select, #paper-size, #mobile-editor-btn, #mobile-preview-btn,
+    #image-format-toolbar, #image-upload-modal {
+        display: none !important;
     }
     
     #preview {
         height: auto;
         overflow: visible;
         padding: 0;
+    }
+    
+    #editor-panel, #preview-panel {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        background: none !important;
+    }
+    
+    .prose {
+        max-width: none;
     }
 }

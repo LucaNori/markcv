@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,59 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
     <link rel="stylesheet" href="/static/css/custom.css">
+    <style>
+        .dark {
+            color-scheme: dark;
+        }
+        .dark body {
+            background-color: #1f2937;
+            color: #f3f4f6;
+        }
+        .dark .bg-white {
+            background-color: #111827;
+        }
+        .dark .bg-gray-100 {
+            background-color: #374151;
+        }
+        .dark .text-gray-600 {
+            color: #d1d5db;
+        }
+        .dark .text-gray-700 {
+            color: #e5e7eb;
+        }
+        .dark .border {
+            border-color: #4b5563;
+        }
+        .dark .prose {
+            color: #e5e7eb;
+        }
+        .dark .prose h1, 
+        .dark .prose h2, 
+        .dark .prose h3 {
+            color: #f3f4f6;
+        }
+        .dark .prose strong {
+            color: #f9fafb;
+        }
+        .dark .CodeMirror {
+            background-color: #1f2937;
+            color: #e5e7eb;
+            border-color: #4b5563;
+        }
+        .dark .editor-toolbar {
+            background-color: #1f2937;
+            border-color: #4b5563;
+        }
+        .dark .editor-toolbar button {
+            color: #e5e7eb;
+        }
+        .dark .editor-toolbar button:hover {
+            background-color: #374151;
+        }
+        .dark .editor-toolbar.disabled-for-preview button:not(.no-disable) {
+            background: #111827;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
     <div class="container mx-auto px-4 py-8">
@@ -15,21 +68,138 @@
             <p class="text-center text-gray-600">Build your CV with Markdown</p>
         </header>
 
+        <!-- Mobile view controls -->
+        <div class="block md:hidden mb-4">
+            <div class="flex rounded-md shadow-sm bg-gray-100" role="group">
+                <button type="button" id="mobile-editor-btn" class="px-4 py-2 text-sm font-medium rounded-l-lg bg-white">Editor</button>
+                <button type="button" id="mobile-preview-btn" class="px-4 py-2 text-sm font-medium rounded-r-lg">Preview</button>
+            </div>
+        </div>
+
         <div class="flex flex-col md:flex-row gap-4">
-            <div class="w-full md:w-1/2 bg-white p-4 rounded shadow">
+            <!-- Editor Panel -->
+            <div id="editor-panel" class="w-full md:w-1/2 bg-white p-4 rounded shadow">
                 <div class="flex justify-between mb-2">
                     <h2 class="text-xl font-semibold">Markdown Editor</h2>
                     <button id="saveBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Save</button>
                 </div>
                 <textarea id="editor"></textarea>
+                
+                <!-- Template Settings -->
+                <div class="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded">
+                    <h3 class="text-lg font-medium mb-2">Template Settings</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Template Style</label>
+                            <select id="template-select" class="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <!-- Templates will be loaded dynamically -->
+                                <option value="europass">Europass</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Paper Size</label>
+                            <select id="paper-size" class="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <option value="a4">A4 (210 × 297 mm)</option>
+                                <option value="letter">US Letter (8.5 × 11 in)</option>
+                                <option value="legal">Legal (8.5 × 14 in)</option>
+                                <option value="a5">A5 (148 × 210 mm)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="w-full md:w-1/2 bg-white p-4 rounded shadow">
+            <!-- Preview Panel -->
+            <div id="preview-panel" class="w-full md:w-1/2 bg-white p-4 rounded shadow hidden md:block">
                 <div class="flex justify-between mb-2">
                     <h2 class="text-xl font-semibold">Preview</h2>
                     <button id="downloadPdfBtn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">Print / Save as PDF</button>
                 </div>
-                <div id="preview" class="prose max-w-none"></div>
+                <div id="preview" class="prose dark:prose-invert max-w-none"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Upload Modal -->
+    <div id="image-upload-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-xl w-full">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-medium">Insert Image</h3>
+                <button id="close-image-modal" class="text-gray-400 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-200">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="mb-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center" id="drop-area">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Drag and drop an image, or click to select a file</p>
+                <input id="file-input" type="file" class="hidden" accept="image/*">
+                <button type="button" id="select-file-btn" class="mt-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Select File
+                </button>
+            </div>
+            
+            <div id="upload-preview" class="hidden mb-4">
+                <img id="preview-image" class="max-h-40 max-w-full mx-auto" src="" alt="Preview">
+                
+                <div class="mt-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Alt Text</label>
+                    <input type="text" id="alt-text" class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+            
+            <div id="upload-progress" class="hidden mb-4">
+                <div class="relative pt-1">
+                    <div class="flex mb-2 items-center justify-between">
+                        <div>
+                            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 dark:text-blue-200 dark:bg-blue-800">
+                                Uploading
+                            </span>
+                        </div>
+                        <div class="text-right">
+                            <span id="progress-text" class="text-xs font-semibold inline-block text-blue-600 dark:text-blue-300">0%</span>
+                        </div>
+                    </div>
+                    <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200 dark:bg-blue-800">
+                        <div id="progress-bar" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex justify-end">
+                <button type="button" id="upload-btn" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Upload and Insert
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Format Toolbar -->
+    <div id="image-format-toolbar" class="hidden fixed bg-white dark:bg-gray-800 shadow-lg rounded-lg p-2 z-40">
+        <div class="flex items-center space-x-2">
+            <button class="img-align-left p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Align Left">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+            <button class="img-align-center p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Align Center">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3 5a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm-3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+            <button class="img-align-right p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Align Right">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm7 5a1 1 0 011-1h5a1 1 0 110 2h-5a1 1 0 01-1-1zm-7 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+            <div class="border-l border-gray-300 dark:border-gray-600 h-6 mx-1"></div>
+            <div class="flex items-center">
+                <label class="text-xs mr-1 whitespace-nowrap dark:text-gray-300">Width:</label>
+                <input type="text" class="img-width form-input w-16 p-1 text-xs dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="px/%">
             </div>
         </div>
     </div>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>$title$</title>
+  $for(css)$
+  <link rel="stylesheet" href="$css$">
+  $endfor$
+  <style>
+    /* Ensure proper layout for Europass template */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
+    }
+    
+    .cv-container {
+      display: flex;
+      width: 100%;
+      max-width: 210mm; /* A4 width */
+      margin: 0 auto;
+    }
+    
+    .sidebar {
+      width: 30%;
+      background-color: #f3f4f6;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    
+    .main-content {
+      width: 70%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    
+    .profile-image {
+      width: 100%;
+      max-width: 150px;
+      height: auto;
+      border-radius: 50%;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+    
+    @media print {
+      .cv-container {
+        display: flex;
+        width: 100%;
+      }
+      
+      .sidebar {
+        width: 30%;
+      }
+      
+      .main-content {
+        width: 70%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cv-container">
+    <div class="sidebar">
+      <!-- This section will be populated with the first image found in the markdown -->
+      <div class="profile-image-container">
+        <!-- Profile image will be inserted here by the backend -->
+        $if(first_image)$
+        <img src="$first_image$" alt="Profile" class="profile-image">
+        $endif$
+      </div>
+      
+      <!-- Contact information section -->
+      <div class="contact-info">
+        <!-- Contact info will be extracted from the markdown -->
+        $for(contact_info)$
+        <p>$contact_info$</p>
+        $endfor$
+      </div>
+      
+      <!-- Skills section if it exists -->
+      <div class="skills-section">
+        $if(skills)$
+        <h2>Skills</h2>
+        $for(skills)$
+        <p>$skills$</p>
+        $endfor$
+        $endif$
+      </div>
+      
+      <!-- Languages section if it exists -->
+      <div class="languages-section">
+        $if(languages)$
+        <h2>Languages</h2>
+        $for(languages)$
+        <p>$languages$</p>
+        $endfor$
+        $endif$
+      </div>
+    </div>
+    
+    <div class="main-content">
+      <!-- Main content will be inserted here -->
+      $body$
+    </div>
+  </div>
+</body>
+</html>

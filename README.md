@@ -47,7 +47,16 @@ docker run -d \
 
 ## Volumes
 
-- `/app/data`: Contains your CV markdown file, the generated PDF, and the LaTeX template
+- `/app/data`: Contains your CV markdown file and images
+
+## Project Structure
+
+- `app/`: Backend Python code
+- `cv_templates/`: CV templates used for rendering
+- `data/`: User content (CV markdown, images)
+- `examples/`: Example files for reference
+- `static/`: Frontend assets (CSS, JavaScript)
+- `templates/`: HTML templates for the web UI
 
 ## Customization
 
@@ -108,10 +117,12 @@ docker-compose -f docker-compose.local.yml up -d
 
 This will:
 - Build the image locally
-- Mount the app, static, and templates directories as volumes for live code changes
+- Mount the app, static, templates, and cv_templates directories as volumes for live code changes
 - Tag the image as markcv:local
 
 You can then make changes to the code and see them reflected immediately without rebuilding the container.
+
+> **Note:** For local development, the cv_templates directory is mounted as a volume to allow for live changes to templates. In production, templates are built into the container image.
 
 > **Note:** The initial build may take some time (5-10 minutes) due to the installation of TeX packages required for PDF generation. Subsequent builds will be faster if you use Docker's build cache.
 

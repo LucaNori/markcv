@@ -12,7 +12,7 @@ services:
       - "9876:9876"
     volumes:
       - ./data:/app/data
-      # Additional volume mounts for local development
+      - ./cv_templates:/app/cv_templates
       - ./app:/app/app
       - ./static:/app/static
       - ./templates:/app/templates

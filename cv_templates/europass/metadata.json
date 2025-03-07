@@ -1,0 +1,54 @@
+{
+  "id": "europass",
+  "name": "Europass",
+  "description": "Professional CV template with a left sidebar for photo and contact information",
+  "paperSizes": ["a4", "letter", "legal"],
+  "recommendedFonts": ["Roboto", "Open Sans", "Arial"],
+  "sections": [
+    {
+      "name": "Header",
+      "description": "Name, photo, and contact information",
+      "required": true
+    },
+    {
+      "name": "Skills",
+      "description": "Technical and professional skills listed as bullet points",
+      "required": false
+    },
+    {
+      "name": "Languages",
+      "description": "Languages with proficiency levels",
+      "required": false
+    },
+    {
+      "name": "Summary",
+      "description": "Brief professional summary or objective",
+      "required": false
+    },
+    {
+      "name": "Experience",
+      "description": "Work experience with company, position, dates, and achievements",
+      "required": false
+    },
+    {
+      "name": "Education",
+      "description": "Educational background with institutions, degrees, and dates",
+      "required": false
+    },
+    {
+      "name": "Projects",
+      "description": "Notable projects with descriptions",
+      "required": false
+    }
+  ],
+  "specialFeatures": [
+    {
+      "name": "Profile Photo",
+      "description": "Displays in left sidebar. Format with: ![profile|align=center|width=150px](/data/images/your-image.jpg)"
+    },
+    {
+      "name": "Contact Information",
+      "description": "Displayed in the sidebar. Format as a single line with pipe separators: **Job Title** | email | phone | links"
+    }
+  ]
+}

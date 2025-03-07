@@ -1,11 +1,5 @@
 services:
   markcv:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
-      args:
-        PUID: ${PUID:-1000}
-        PGID: ${PGID:-1000}
     image: ghcr.io/lucanori/markcv:latest
     container_name: markcv
     ports:
@@ -16,3 +10,6 @@ services:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
     restart: unless-stopped
+    labels:
+      # Enable Watchtower, remove if not needed
+      - com.centurylinklabs.watchtower.enable=true
