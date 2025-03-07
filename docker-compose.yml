@@ -1,0 +1,18 @@
+services:
+  markcv:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        PUID: ${PUID:-1000}
+        PGID: ${PGID:-1000}
+    image: ghcr.io/lucanori/markcv:latest
+    container_name: markcv
+    ports:
+      - "9876:9876"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+    restart: unless-stopped

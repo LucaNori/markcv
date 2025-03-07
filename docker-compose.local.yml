@@ -1,0 +1,22 @@
+services:
+  markcv:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        PUID: ${PUID:-1000}
+        PGID: ${PGID:-1000}
+    image: markcv:local
+    container_name: markcv-local
+    ports:
+      - "9876:9876"
+    volumes:
+      - ./data:/app/data
+      # Additional volume mounts for local development
+      - ./app:/app/app
+      - ./static:/app/static
+      - ./templates:/app/templates
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+    restart: unless-stopped

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarkCV - Markdown CV Builder</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <link rel="stylesheet" href="/static/css/custom.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-center">MarkCV</h1>
+            <p class="text-center text-gray-600">Build your CV with Markdown</p>
+        </header>
+
+        <div class="flex flex-col md:flex-row gap-4">
+            <div class="w-full md:w-1/2 bg-white p-4 rounded shadow">
+                <div class="flex justify-between mb-2">
+                    <h2 class="text-xl font-semibold">Markdown Editor</h2>
+                    <button id="saveBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Save</button>
+                </div>
+                <textarea id="editor"></textarea>
+            </div>
+
+            <div class="w-full md:w-1/2 bg-white p-4 rounded shadow">
+                <div class="flex justify-between mb-2">
+                    <h2 class="text-xl font-semibold">Preview</h2>
+                    <button id="downloadPdfBtn" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">Print / Save as PDF</button>
+                </div>
+                <div id="preview" class="prose max-w-none"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
