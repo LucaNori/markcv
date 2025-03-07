@@ -70,7 +70,8 @@
     <div class="sidebar">
       <div class="profile-image-container">
         $if(first_image)$
-        <img src="$first_image$" alt="Profile" class="profile-image">
+        <img src="$first_image$" alt="Profile" class="profile-image" 
+             $if(image_x_offset)$style="object-position: ${image_x_offset}px ${image_y_offset}px"$endif$>
         $endif$
       </div>
       

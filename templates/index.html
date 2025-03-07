@@ -201,11 +201,24 @@
                 <label class="text-xs mr-1 whitespace-nowrap dark:text-gray-300">Width:</label>
                 <input type="text" class="img-width form-input w-16 p-1 text-xs dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="px/%">
             </div>
+            
+            <!-- Position Controls (for profile images) -->
+            <div class="position-controls hidden ml-2">
+                <div class="border-l border-gray-300 dark:border-gray-600 h-6 mx-1"></div>
+                <div class="flex items-center">
+                    <label class="text-xs mr-1 whitespace-nowrap dark:text-gray-300">X:</label>
+                    <input type="number" class="img-x-offset form-input w-14 p-1 text-xs dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="0">
+                </div>
+                <div class="flex items-center ml-2">
+                    <label class="text-xs mr-1 whitespace-nowrap dark:text-gray-300">Y:</label>
+                    <input type="number" class="img-y-offset form-input w-14 p-1 text-xs dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="0">
+                </div>
+            </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
-    <script src="/static/js/main.js"></script>
+    <script type="module" src="/static/js/index.js"></script>
 </body>
 </html>

@@ -412,6 +412,30 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 document.querySelector('.img-width').value = '';
             }
+            
+            // Set position offset values if this is a profile image
+            if (currentImage.classList.contains('profile-image')) {
+                const markdown = editor.value();
+                const imgSrc = currentImage.src.replace(window.location.origin, '');
+                
+                const imgRegex = new RegExp(`!\\[(.*?)\\]\\(${escapeRegExp(imgSrc)}\\)`, 'g');
+                let match = imgRegex.exec(markdown);
+                
+                if (match) {
+                    const alt = match[1];
+                    const props = parseImageDimensions(alt);
+                    
+                    document.querySelector('.img-x-offset').value = props['x-offset'] || 0;
+                    document.querySelector('.img-y-offset').value = props['y-offset'] || 0;
+                    
+                    // Show position controls only for profile images
+                    document.querySelector('.position-controls').classList.remove('hidden');
+                } else {
+                    document.querySelector('.position-controls').classList.add('hidden');
+                }
+            } else {
+                document.querySelector('.position-controls').classList.add('hidden');
+            }
         } else if (!imgFormatToolbar.contains(e.target)) {
             imgFormatToolbar.classList.add('hidden');
             currentImage = null;
@@ -440,6 +464,17 @@ document.addEventListener('DOMContentLoaded', () => {
             width += 'px';
         }
         updateImageFormat('width', width);
+    });
+    
+    // Add event listeners for position offset controls
+    document.querySelector('.img-x-offset').addEventListener('change', (e) => {
+        if (!currentImage || !currentImage.classList.contains('profile-image')) return;
+        updateImageFormat('x-offset', e.target.value);
+    });
+    
+    document.querySelector('.img-y-offset').addEventListener('change', (e) => {
+        if (!currentImage || !currentImage.classList.contains('profile-image')) return;
+        updateImageFormat('y-offset', e.target.value);
     });
 
     function updateImageFormat(property, value) {
