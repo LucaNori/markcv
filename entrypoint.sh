@@ -1,11 +1,17 @@
 #!/bin/sh
 set -e
 
-echo "Starting MarkCV with UID: $(id -u) GID: $(id -g)"
+# Get runtime UID/GID from environment variables
+RUNTIME_PUID=${PUID:-1000}
+RUNTIME_PGID=${PGID:-1000}
 
-# Ensure data directory has correct permissions
+echo "Starting MarkCV with UID: ${RUNTIME_PUID} GID: ${RUNTIME_PGID}"
+
+# Ensure data directory exists
 mkdir -p /app/data
-chown -R $(id -u):$(id -g) /app/data
 
-# Start the application
-exec uvicorn app.main:app --host 0.0.0.0 --port 9876
+# Set correct permissions on data directory
+chown -R ${RUNTIME_PUID}:${RUNTIME_PGID} /app/data
+
+# Run the application as the specified user
+exec su-exec ${RUNTIME_PUID}:${RUNTIME_PGID} uvicorn app.main:app --host 0.0.0.0 --port 9876

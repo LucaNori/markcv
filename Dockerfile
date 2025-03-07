@@ -11,6 +11,7 @@ RUN apk add --no-cache \
     pandoc \
     fontconfig \
     ttf-dejavu \
+    su-exec \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /app
@@ -20,10 +21,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY --chown=markcv:markcv . .
 
-USER markcv
-
 EXPOSE 9876
 
-COPY --chown=markcv:markcv entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
