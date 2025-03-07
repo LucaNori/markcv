@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="$css$">
   $endfor$
   <style>
-    /* Ensure proper layout for Europass template */
     body {
       margin: 0;
       padding: 0;
@@ -35,12 +34,18 @@
       box-sizing: border-box;
     }
     
-    .profile-image {
+    .profile-image-container {
       width: 100%;
-      max-width: 150px;
-      height: auto;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .profile-image {
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
-      margin: 0 auto 20px auto;
+      object-fit: cover;
       display: block;
     }
     
@@ -63,45 +68,38 @@
 <body>
   <div class="cv-container">
     <div class="sidebar">
-      <!-- This section will be populated with the first image found in the markdown -->
       <div class="profile-image-container">
-        <!-- Profile image will be inserted here by the backend -->
         $if(first_image)$
         <img src="$first_image$" alt="Profile" class="profile-image">
         $endif$
       </div>
       
-      <!-- Contact information section -->
       <div class="contact-info">
-        <!-- Contact info will be extracted from the markdown -->
         $for(contact_info)$
-        <p>$contact_info$</p>
+        $contact_info$
         $endfor$
       </div>
       
-      <!-- Skills section if it exists -->
       <div class="skills-section">
         $if(skills)$
         <h2>Skills</h2>
         $for(skills)$
-        <p>$skills$</p>
+        $skills$
         $endfor$
         $endif$
       </div>
       
-      <!-- Languages section if it exists -->
       <div class="languages-section">
         $if(languages)$
         <h2>Languages</h2>
         $for(languages)$
-        <p>$languages$</p>
+        $languages$
         $endfor$
         $endif$
       </div>
     </div>
     
     <div class="main-content">
-      <!-- Main content will be inserted here -->
       $body$
     </div>
   </div>

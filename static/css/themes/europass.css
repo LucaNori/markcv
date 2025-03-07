@@ -41,13 +41,21 @@ body {
 }
 
 /* Profile Image */
-.profile-image {
+.profile-image-container {
   width: 100%;
-  max-width: 150px;
-  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  margin: 0 auto 20px auto;
+  object-fit: cover;
   display: block;
+  border: 3px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Contact Information */
@@ -58,6 +66,24 @@ body {
 .contact-info p {
   margin: 5px 0;
   font-size: 0.9em;
+}
+
+/* Make sure bold and italic work in sidebar */
+.sidebar strong, .sidebar b {
+  font-weight: bold;
+}
+
+.sidebar em, .sidebar i {
+  font-style: italic;
+}
+
+.sidebar a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
 }
 
 /* Section Styling */
@@ -215,5 +241,6 @@ li {
   
   .profile-image {
     max-width: 120px;
+    max-height: 120px;
   }
 }
