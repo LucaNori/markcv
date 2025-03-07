@@ -76,13 +76,12 @@ MarkCV follows a simple client-server architecture:
 ```
 markCV/
 ├── app/                  # Backend Python code
-│   ├── main.py           # FastAPI application entry point
-│   ├── api/              # API endpoints (future expansion)
-│   ├── services/         # Business logic (future expansion)
-│   └── utils/            # Utility functions (future expansion)
+│   └── main.py           # FastAPI application entry point
 ├── cv_templates/         # CV templates
 │   └── europass/         # Europass template
 │       ├── metadata.json # Template metadata
+│       ├── README.md     # Template documentation
+│       ├── example.md    # Example CV for this template
 │       └── template.html # Template HTML
 ├── data/                 # User data (not in repo)
 │   ├── cv.md             # User's CV content
@@ -91,13 +90,11 @@ markCV/
 ├── example-data/         # Example files for the data folder
 │   ├── cv.md.example     # Example CV
 │   └── images/           # Example images
-├── docker/               # Docker configuration
-│   ├── Dockerfile        # Docker image definition
-│   └── entrypoint.sh     # Container entrypoint script
 ├── static/               # Static assets
 │   ├── css/              # CSS stylesheets
 │   │   ├── custom.css    # Custom styles for the UI
-│   │   └── pdf.css       # Styles for print/PDF output
+│   │   ├── pdf.css       # Styles for print/PDF output
+│   │   └── themes/       # Template-specific CSS files
 │   ├── js/               # JavaScript files
 │   │   └── main.js       # Main application logic
 │   └── lib/              # Third-party libraries (future expansion)
@@ -106,6 +103,8 @@ markCV/
 │   └── components/       # Reusable components (future expansion)
 ├── .gitignore            # Git ignore file
 ├── CHANGELOG.md          # Project changelog
+├── Dockerfile            # Docker image definition
+├── entrypoint.sh         # Container entrypoint script
 ├── docker-compose.yml    # Production Docker Compose configuration
 ├── docker-compose.local.yml # Local development Docker Compose
 ├── LICENSE               # Project license
@@ -230,7 +229,6 @@ The production Docker image:
 ### Volumes
 
 - `/app/data`: Contains the CV markdown file and user images
-- `/app/cv_templates`: Contains CV templates
 
 ## Deployment
 
@@ -240,7 +238,7 @@ The container is deployed to GitHub Container Registry:
 
 ```bash
 # Build and tag
-docker build -t ghcr.io/lucanori/markcv:latest -f docker/Dockerfile .
+docker build -t ghcr.io/lucanori/markcv:latest .
 
 # Push to registry
 docker push ghcr.io/lucanori/markcv:latest

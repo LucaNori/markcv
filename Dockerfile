@@ -24,6 +24,6 @@ USER markcv
 
 EXPOSE 9876
 
-COPY --chown=markcv:markcv docker/entrypoint.sh /entrypoint.sh
+COPY --chown=markcv:markcv entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

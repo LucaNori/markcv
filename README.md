@@ -129,7 +129,7 @@ You can then make changes to the code and see them reflected immediately without
 ### Building the Docker Image
 
 ```bash
-docker build -t ghcr.io/lucanori/markcv:latest -f docker/Dockerfile .
+docker build -t ghcr.io/lucanori/markcv:latest .
 ```
 
 ## License
